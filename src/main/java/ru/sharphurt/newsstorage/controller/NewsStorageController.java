@@ -35,13 +35,13 @@ public class NewsStorageController {
         return ControllerSuccessResponse.of(getNewsService.getAll());
     }
 
-    @PatchMapping("/{guid}?field=title")
+    @PatchMapping("/{guid}/title")
     public ControllerEmptySuccessResponse updateNewsTitle(@PathVariable("guid") String guid, @RequestBody UpdateNewsTitleDto body) {
         updateNewsService.updateNewsTitleById(guid, body);
         return ControllerEmptySuccessResponse.create();
     }
 
-    @PatchMapping("/{guid}?field=description")
+    @PatchMapping("/{guid}/description")
     public ControllerEmptySuccessResponse updateNewsDescription(@PathVariable("guid") String guid, @RequestBody UpdateNewsDescriptionDto body) {
         updateNewsService.updateNewsDescriptionById(guid, body);
         return ControllerEmptySuccessResponse.create();

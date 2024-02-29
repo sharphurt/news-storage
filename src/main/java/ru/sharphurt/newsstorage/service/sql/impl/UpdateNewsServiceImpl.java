@@ -24,7 +24,7 @@ public class UpdateNewsServiceImpl implements UpdateNewsService {
 
     public void updateNewsDescriptionById(String guid, UpdateNewsDescriptionDto dto) {
         var entity = repository.findById(guid).orElseThrow(() -> new EntityNotFoundException(serviceName, guid));
-        entity.setTitle(dto.getDescription());
+        entity.setDescription(dto.getDescription());
         repository.save(entity);
     }
 }
