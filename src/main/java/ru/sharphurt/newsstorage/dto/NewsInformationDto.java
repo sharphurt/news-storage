@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.sharphurt.newsstorage.serialization.LocalDateTimeDeserializer;
-import ru.sharphurt.newsstorage.serialization.LocalDateTimeSerializer;
+import ru.sharphurt.newsstorage.serialization.ZonedDateTimeDeserializer;
+import ru.sharphurt.newsstorage.serialization.ZonedDateTimeSerializer;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class NewsInformationDto {
     private String title;
     private String description;
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime publicationDate;
+    @JsonDeserialize(using = ZonedDateTimeDeserializer.class)
+    @JsonSerialize(using = ZonedDateTimeSerializer.class)
+    private ZonedDateTime publicationDate;
 }

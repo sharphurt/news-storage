@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @Entity
@@ -20,5 +20,6 @@ public class NewsEntity {
     private String guid;
     private String title;
     private String description;
-    private LocalDateTime publicationDate;
+    private ZonedDateTime publicationDate;
+    private String timezoneId;
 }

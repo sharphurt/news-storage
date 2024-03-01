@@ -5,14 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-public class BaseException extends RuntimeException {
+public class SilentBaseException extends RuntimeException {
 
     private final String message;
 
-    public BaseException(String message, Throwable e) {
+    public SilentBaseException(String message) {
         super(message);
         log.error(message);
-        e.printStackTrace();
         this.message = message;
     }
 }

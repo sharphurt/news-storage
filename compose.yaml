@@ -1,8 +1,7 @@
 services:
-  application:
-    image: application:0.0.1
+  news-storage:
+    image: application
     build:
-      context: .
       dockerfile: Dockerfile
     ports:
       - "8181:8181"
@@ -24,6 +23,14 @@ services:
       - ./dbdata:/var/lib/mysql
       - ./conf-mysql.cnf:/etc/mysql/conf.d/mysql.cnf
     restart: unless-stopped
+
+  rss-reader:
+    image: rss-reader-app
+    build: https://github.com/sharphurt/cron-rss-reader.git
+    ports:
+      - "8282:8282"
+    depends_on:
+      - news-storage
 
 volumes:
   db-data:

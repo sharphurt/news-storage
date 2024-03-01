@@ -8,13 +8,12 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class LocalDateTimeDeserializer extends JsonDeserializer<java.time.LocalDateTime> {
+public class ZonedDateTimeDeserializer extends JsonDeserializer<java.time.ZonedDateTime> {
 
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
     @Override
-    public java.time.LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        String dateString = p.getText();
-        return java.time.LocalDateTime.parse(dateString, dateFormat);
+    public java.time.ZonedDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        return java.time.ZonedDateTime.parse(p.getText(), dateFormat);
     }
 }

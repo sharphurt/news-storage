@@ -35,6 +35,16 @@ public class NewsStorageController {
         return ControllerSuccessResponse.of(getNewsService.getAll());
     }
 
+    @GetMapping("/last")
+    public ControllerSuccessResponse<NewsInformationDto> getLastNews() {
+        return ControllerSuccessResponse.of(getNewsService.getLastPublished());
+    }
+
+    @GetMapping("/{guid}")
+    public ControllerSuccessResponse<NewsInformationDto> getById(@PathVariable("guid") String guid) {
+        return ControllerSuccessResponse.of(getNewsService.getById(guid));
+    }
+
     @PatchMapping("/{guid}/title")
     public ControllerEmptySuccessResponse updateNewsTitle(@PathVariable("guid") String guid, @RequestBody UpdateNewsTitleDto body) {
         updateNewsService.updateNewsTitleById(guid, body);

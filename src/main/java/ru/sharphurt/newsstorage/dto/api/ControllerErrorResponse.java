@@ -3,7 +3,7 @@ package ru.sharphurt.newsstorage.dto.api;
 import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ru.sharphurt.newsstorage.exception.BaseException;
+import ru.sharphurt.newsstorage.exception.SilentBaseException;
 
 @EqualsAndHashCode(callSuper = true)
 public class ControllerErrorResponse extends ResponseEntity<ControllerResponse<?>> {
@@ -12,7 +12,7 @@ public class ControllerErrorResponse extends ResponseEntity<ControllerResponse<?
         super(ControllerResponse.builder().successful(false).error(e.getMessage()).result(null).build(), status);
     }
 
-    public static ControllerErrorResponse of(BaseException e, HttpStatus status) {
+    public static ControllerErrorResponse of(SilentBaseException e, HttpStatus status) {
         return new ControllerErrorResponse(e, status);
     }
 

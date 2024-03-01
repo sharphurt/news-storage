@@ -56,7 +56,6 @@ class NewsStorageControllerTest extends BaseSpringContextTest {
                 .andExpect(jsonPath("successful").value("true"));
     }
 
-
     @SneakyThrows
     @Test
     public void uploadNews_alreadyExisted_successTest() {
@@ -80,8 +79,26 @@ class NewsStorageControllerTest extends BaseSpringContextTest {
 
         var result = objectMapper.readValue(getResponse, GetNewsStructureDto.class).getResult();
         assertEquals(objectMapper.writeValueAsString(newsList_correct), objectMapper.writeValueAsString(result));
+        assertEquals(result.size(), 4);
     }
 
+    @SneakyThrows
+    @Test
+    public void getLastUploaded_successTest() {
+        mvc.perform(post("/api")
+                        .content(objectMapper.writeValueAsString(newsList_correct))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("successful").value("true"));
+
+        var getResponse = mvc.perform(get("/api/last"))
+                .andExpect(status().is(200))
+                .andReturn().getResponse().getContentAsString();
+
+        var result = objectMapper.readValue(getResponse, GetLastNewsStructureDto.class).getResult();
+        assertEquals(newsList_correct.getLast().getGuid(), result.getGuid());
+    }
 
     @SneakyThrows
     @Test
@@ -190,5 +207,8 @@ class NewsStorageControllerTest extends BaseSpringContextTest {
 
 
     private static class GetNewsStructureDto extends ControllerResponse<List<NewsInformationDto>> {
+    }
+
+    private static class GetLastNewsStructureDto extends ControllerResponse<NewsInformationDto> {
     }
 }
