@@ -1,6 +1,6 @@
 services:
   news-storage:
-    image: application
+    image: news-storage
     build:
       dockerfile: Dockerfile
     ports:
@@ -27,6 +27,11 @@ services:
   rss-reader:
     image: rss-reader-app
     build: https://github.com/sharphurt/cron-rss-reader.git
+    environment:
+      - RSS_URL=https://lenta.ru/rss
+      - RSS_TIMEZONE=+03:00
+      - EXTERNAL_STORAGE_URL=http://host.docker.internal:8181/api
+      - CRON_EXPRESSION=*/10 * * * * *
     ports:
       - "8282:8282"
     depends_on:

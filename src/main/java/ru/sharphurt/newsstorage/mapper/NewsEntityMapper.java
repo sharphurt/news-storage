@@ -1,13 +1,11 @@
 package ru.sharphurt.newsstorage.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import ru.sharphurt.newsstorage.dto.NewsInformationDto;
 import ru.sharphurt.newsstorage.entity.NewsEntity;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -24,6 +22,11 @@ public interface NewsEntityMapper {
     @Named("timezoneConverter")
     default String convertZonedDatetimeToTimezoneId(ZonedDateTime dateTime) {
         return dateTime.getZone().getId();
+    }
+
+    @AfterMapping
+    default void convertTimezoneIdToZonedDateTime(@MappingTarget NewsInformationDto target, NewsEntity mfm) {
+        target.setPublicationDate(mfm.getPublicationDate().withZoneSameInstant(ZoneId.of(mfm.getTimezoneId())));
     }
 
     List<NewsEntity> mapToEntitiesCollection(List<NewsInformationDto> informationDtoList);
